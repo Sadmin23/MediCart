@@ -1,0 +1,11 @@
+{
+  "name": "medi-cart",
+  "version": "1.0.0",
+  "description": "MERN project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Md. Sadmin Tahmid Khan",
+  "license": "ISC"
+}
