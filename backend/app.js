@@ -8,8 +8,10 @@ app.use(express.json());
 // Importing all routes
 
 const products = require("./routes/products");
+const auth = require("./routes/auth");
 
 app.use("/api/v1", products);
+app.use("/api/v1", auth);
 
 // Middleware to handle errors
 app.use(errorMiddleware);
