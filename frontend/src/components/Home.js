@@ -1,10 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/alt-text */
-import React from 'react'
+import React, { Fragment } from 'react'
 
 const Home = () => {
     return (
-        <div className="container container-fluid">
+        <Fragment>
             <h1 id="products_heading">Latest Products</h1>
             <section id="products" className="container mt-5">
                 <div className="row">
@@ -31,7 +31,7 @@ const Home = () => {
                     </div>
                 </div>
             </section>
-        </div>
+        </Fragment>
     )
 }
 
