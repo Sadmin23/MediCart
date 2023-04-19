@@ -24,14 +24,13 @@ const Home = () => {
   useEffect(() => {
     
     if (error) {
-      alert.success('Success')
       return alert.error(error)
     }
     
-    dispatch(getProducts());
+    dispatch(getProducts(currentPage));
     
       
-  }, [dispatch, alert, error])
+  }, [dispatch, alert, error, currentPage])
 
   function setCurrentPageNo(pageNumber) {
     setCurrentPage(pageNumber)
@@ -53,7 +52,8 @@ const Home = () => {
             </Fragment>
         )}
 
-                      <div className="d-flex justify-content-center mt-5">
+                    {resPerPage <= productsCount && (
+                        <div className="d-flex justify-content-center mt-5">
                             <Pagination
                                 activePage={currentPage}
                                 itemsCountPerPage={resPerPage}
@@ -67,6 +67,7 @@ const Home = () => {
                                 linkClass="page-link"
                             />
                         </div>
+                    )}
         
     </Fragment>
   )
