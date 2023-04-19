@@ -4,20 +4,31 @@ import React, { Fragment, useEffect } from 'react'
 
 import MetaData from './layout/MetaData'
 import Product from './product/Products'
+import Loader from '../components/layout/Loader'
 
 import { useDispatch, useSelector } from 'react-redux'
+import { useAlert } from 'react-alert';
 import { getProducts } from '../actions/productActions'
-import Loader from '../components/layout/Loader'
+
 
 const Home = () => {
 
+  const alert = useAlert();  
   const dispatch = useDispatch();
 
   const { loading, products, error, productsCount } = useSelector(state => state.products)
 
   useEffect(() => {
-      dispatch(getProducts());
-  }, [dispatch])
+    
+    if (error) {
+      alert.success('Success')
+      return alert.error(error)
+    }
+    
+    dispatch(getProducts());
+    
+      
+  }, [dispatch, alert, error])
 
   return (
     <Fragment>
