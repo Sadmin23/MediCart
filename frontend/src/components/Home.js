@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/alt-text */
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
+import Pagination from 'react-js-pagination'
 
 import MetaData from './layout/MetaData'
 import Product from './product/Products'
@@ -13,10 +14,12 @@ import { getProducts } from '../actions/productActions'
 
 const Home = () => {
 
+  const [currentPage, setCurrentPage] = useState(1)
+
   const alert = useAlert();  
   const dispatch = useDispatch();
 
-  const { loading, products, error, productsCount } = useSelector(state => state.products)
+  const { loading, products, error, productsCount, resPerPage } = useSelector(state => state.products)
 
   useEffect(() => {
     
@@ -29,6 +32,10 @@ const Home = () => {
     
       
   }, [dispatch, alert, error])
+
+  function setCurrentPageNo(pageNumber) {
+    setCurrentPage(pageNumber)
+  }
 
   return (
     <Fragment>
@@ -45,6 +52,22 @@ const Home = () => {
                 </section>
             </Fragment>
         )}
+
+                      <div className="d-flex justify-content-center mt-5">
+                            <Pagination
+                                activePage={currentPage}
+                                itemsCountPerPage={resPerPage}
+                                totalItemsCount={productsCount}
+                                onChange={setCurrentPageNo}
+                                nextPageText={'Next'}
+                                prevPageText={'Prev'}
+                                firstPageText={'First'}
+                                lastPageText={'Last'}
+                                itemClass="page-item"
+                                linkClass="page-link"
+                            />
+                        </div>
+        
     </Fragment>
   )
 }
