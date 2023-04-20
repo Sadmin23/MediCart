@@ -2,6 +2,8 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { Fragment, useState, useEffect } from 'react'
 import Pagination from 'react-js-pagination'
+import Slider from 'rc-slider'
+import 'rc-slider/assets/index.css';
 
 import MetaData from './layout/MetaData'
 import Product from './product/Products'
@@ -13,9 +15,14 @@ import { getProducts } from '../actions/productActions'
 
 import { useParams } from 'react-router-dom'
 
+const { createSliderWithTooltip } = Slider;
+const Range = createSliderWithTooltip(Slider.Range)
+
 const Home = () => {
 
   const [currentPage, setCurrentPage] = useState(1)
+  const [price, setPrice] = useState([1, 1000])
+
 
   const alert = useAlert();  
   const dispatch = useDispatch();
@@ -30,10 +37,10 @@ const Home = () => {
       return alert.error(error)
     }
     
-    dispatch(getProducts( keyword, currentPage));
+    dispatch(getProducts( keyword, currentPage, price));
     
       
-  }, [dispatch, alert, error, keyword, currentPage])
+  }, [dispatch, alert, error, keyword, currentPage, price])
 
   function setCurrentPageNo(pageNumber) {
     setCurrentPage(pageNumber)
