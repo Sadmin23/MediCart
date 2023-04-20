@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useAlert } from 'react-alert';
 import { getProducts } from '../actions/productActions'
 
+import { useParams } from 'react-router-dom'
 
 const Home = () => {
 
@@ -21,16 +22,18 @@ const Home = () => {
 
   const { loading, products, error, productsCount, resPerPage } = useSelector(state => state.products)
 
+  const { keyword } = useParams();
+
   useEffect(() => {
     
     if (error) {
       return alert.error(error)
     }
     
-    dispatch(getProducts(currentPage));
+    dispatch(getProducts( keyword, currentPage));
     
       
-  }, [dispatch, alert, error, currentPage])
+  }, [dispatch, alert, error, keyword, currentPage])
 
   function setCurrentPageNo(pageNumber) {
     setCurrentPage(pageNumber)
