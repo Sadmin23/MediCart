@@ -10,6 +10,7 @@ import ProductDetails from './components/product/ProductDetails'
 // Cart Imports
 import Cart from './components/cart/Cart'
 import Shipping from './components/cart/Shipping'
+import ConfirmOrder from './components/cart/ConfirmOrder'
 
 // Auth or User imports
 import Login from './components/user/Login'
@@ -41,6 +42,7 @@ function App() {
                         
                         <Route path="/cart" component={Cart} exact />
                         <ProtectedRoute path="/shipping" component={Shipping} />
+                        <ProtectedRoute path="/confirm" component={ConfirmOrder} exact />
 
                         <Route path="/login" component={Login} />
                         <Route path="/register" component={Register} />
