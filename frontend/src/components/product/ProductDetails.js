@@ -6,8 +6,9 @@ import MetaData from '../layout/MetaData'
 
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { getProductDetails, clearErrors } from '../../actions/productActions'
+import { getProductDetails, newReview ,clearErrors } from '../../actions/productActions'
 import { addItemToCart } from '../../actions/cartActions'
+import { NEW_REVIEW_RESET } from '../../constants/productConstants'
 
 import { useParams } from 'react-router-dom'
 
@@ -22,18 +23,29 @@ const ProductDetails = ({match}) => {
 
     const { loading, error, product } = useSelector(state => state.productDetails)
     const { user } = useSelector(state => state.auth)
-
+    const { error: reviewError, success } = useSelector(state => state.newReview)
     
     const { id } = useParams();
 
     useEffect(() => {
-      dispatch(getProductDetails(id));
-    
-      if (error) {
-        alert.error(error);
-        dispatch(clearErrors());
-      }
-    }, [dispatch, alert, error, id]);
+        dispatch(getProductDetails(match.params.id))
+
+        if (error) {
+            alert.error(error);
+            dispatch(clearErrors())
+        }
+
+        if (reviewError) {
+            alert.error(reviewError);
+            dispatch(clearErrors())
+        }
+
+        if (success) {
+            alert.success('Reivew posted successfully')
+            dispatch({ type: NEW_REVIEW_RESET })
+        }
+
+    }, [dispatch, alert, error, reviewError, match.params.id, success])
 
     const addToCart = () => {
         dispatch(addItemToCart(match.params.id, quantity));
@@ -96,6 +108,16 @@ const ProductDetails = ({match}) => {
                 }
             })
         }
+    }
+
+    const reviewHandler = () => {
+        const formData = new FormData();
+
+        formData.set('rating', rating);
+        formData.set('comment', comment);
+        formData.set('productId', match.params.id);
+
+        dispatch(newReview(formData));
     }
 
   return (
@@ -178,11 +200,16 @@ const ProductDetails = ({match}) => {
                                             <li className="star"><i className="fa fa-star"></i></li>
                                         </ul>
 
-                                        <textarea name="review" id="review" className="form-control mt-3">
+                                        <textarea
+                                            name="review"
+                                            id="review" className="form-control mt-3"
+                                            value={comment}
+                                            onChange={(e) => setComment(e.target.value)}
+                                        >
 
                                         </textarea>
 
-                                        <button className="btn my-3 float-right review-btn px-4 text-white" data-dismiss="modal" aria-label="Close">Submit</button>
+                                        <button className="btn my-3 float-right review-btn px-4 text-white" onClick={reviewHandler} data-dismiss="modal" aria-label="Close">Submit</button>
                                     </div>
                                 </div>
                             </div>
