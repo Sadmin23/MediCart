@@ -7,19 +7,27 @@ import Sidebar from './Sidebar'
 
 import { useDispatch, useSelector } from 'react-redux'
 
-
 import { getAdminProducts } from '../../actions/productActions'
+import { allOrders } from '../../actions/orderActions'
 
 const Dashboard = () => {
 
     const dispatch = useDispatch();
 
     const { products } = useSelector(state => state.products)
+    const { orders, totalAmount, loading } = useSelector(state => state.allOrders)
+
+    let outOfStock = 0;
+    products.forEach(product => {
+        if (product.stock === 0) {
+            outOfStock += 1;
+        }
+    })
 
     useEffect(() => {
         dispatch(getAdminProducts())
+        dispatch(allOrders())
     }, [dispatch])
-
 
     return (
         <Fragment>
@@ -31,6 +39,7 @@ const Dashboard = () => {
                 <div className="col-12 col-md-10">
                     <h1 className="my-4">Dashboard</h1>
 
+                    {loading ? <Loader /> : (
                         <Fragment>
                             <MetaData title={'Admin Dashboard'} />
 
@@ -38,7 +47,7 @@ const Dashboard = () => {
                                 <div className="col-xl-12 col-sm-12 mb-3">
                                     <div className="card text-white bg-primary o-hidden h-100">
                                         <div className="card-body">
-                                            <div className="text-center card-font-size">Total Amount<br />
+                                            <div className="text-center card-font-size">Total Amount<br /> <b>${totalAmount && totalAmount.toFixed(2)}</b>
                                             </div>
                                         </div>
                                     </div>
@@ -64,7 +73,7 @@ const Dashboard = () => {
                                 <div className="col-xl-3 col-sm-6 mb-3">
                                     <div className="card text-white bg-danger o-hidden h-100">
                                         <div className="card-body">
-                                            <div className="text-center card-font-size">Orders<br />7</div>
+                                            <div className="text-center card-font-size">Orders<br /> <b>{orders && orders.length}</b></div>
                                         </div>
                                         <Link className="card-footer text-white clearfix small z-1" to="/admin/orders">
                                             <span className="float-left">View Details</span>
@@ -79,7 +88,7 @@ const Dashboard = () => {
                                 <div className="col-xl-3 col-sm-6 mb-3">
                                     <div className="card text-white bg-info o-hidden h-100">
                                         <div className="card-body">
-                                            <div className="text-center card-font-size">Users<br />20</div>
+                                            <div className="text-center card-font-size">Users</div>
                                         </div>
                                         <Link className="card-footer text-white clearfix small z-1" to="/admin/users">
                                             <span className="float-left">View Details</span>
@@ -94,12 +103,13 @@ const Dashboard = () => {
                                 <div className="col-xl-3 col-sm-6 mb-3">
                                     <div className="card text-white bg-warning o-hidden h-100">
                                         <div className="card-body">
-                                            <div className="text-center card-font-size">Out of Stock<br />4</div>
+                                            <div className="text-center card-font-size">Out of Stock<br /> <b>{outOfStock}</b></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </Fragment>
+                    )}
 
                 </div>
             </div>
