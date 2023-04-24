@@ -113,6 +113,17 @@ const LoginForm = () => {
                         name="email"
                       />
                     </div>
+                    <div className="relative">
+                      <label className="ml-3 text-sm font-bold text-teal-500 tracking-wide">
+                        Email
+                      </label>
+                      <input
+                        className=" w-full text-base px-4 py-2 border-b border-gray-300 placeholder-gray-600 focus:outline-none rounded-2xl focus:border-teal-500"
+                        type="email"
+                        placeholder="mail@gmail.com"
+                        name="email"
+                      />
+                    </div>
                     <div className="mt-8 content-center">
                       <label className="ml-3 text-sm font-bold text-teal-500 tracking-wide">
                         Password
