@@ -26,18 +26,18 @@ const Home = () => {
   const [rating, setRating] = useState(0)
 
   const categories = [
-      'Electronics',
-      'Cameras',
-      'Laptops',
-      'Accessories',
-      'Headphones',
-      'Food',
-      "Books",
-      'Clothes/Shoes',
-      'Beauty/Health',
-      'Sports',
-      'Outdoor',
-      'Home'
+    'Medicines',
+    'First-Aid Kits',
+    'Personal Hygiene',
+    'Medical Devices',
+    'Diagnostic Tools',
+    'Prescription Drugs',
+    'Antibiotics',
+    'Antiseptics',
+    'Home Health Care',
+    'Skin care',
+    'Oral care',
+    'Pain relief'
   ]  
 
   const alert = useAlert();  
